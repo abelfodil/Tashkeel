@@ -1,0 +1,5 @@
+.venv/
+*.onnx
+*.json
+*.h5
+*.pickle
