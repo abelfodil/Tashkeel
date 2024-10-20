@@ -3,9 +3,11 @@ from typing import Union
 from torch.utils.data import Dataset
 from datasets.transforms.diacritics import StripDiacritics
 import nltk
+from camel_tools.utils.charmap import CharMapper
 
 nltk.download("punkt_tab")
 
+mapper = CharMapper.builtin_mapper("arclean")
 
 class TextFileDataset(Dataset):
 
@@ -14,7 +16,7 @@ class TextFileDataset(Dataset):
     ):
         with open(file_path, "r", encoding="utf-8") as f:
             file_content = f.read()
-        self.sentences = nltk.sent_tokenize(file_content)
+        self.sentences = nltk.sent_tokenize(mapper.map_string(file_content))
 
         self.transform = transform
 
