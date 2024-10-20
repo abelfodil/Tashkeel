@@ -1,20 +1,16 @@
-from camel_tools.utils.charsets import (
-    AR_CHARSET,
-    UNICODE_LETTER_MARK_NUMBER_CHARSET,
-    UNICODE_PUNCT_SYMBOL_CHARSET,
-)
+from camel_tools.utils.charsets import AR_CHARSET, UNICODE_PUNCT_CHARSET
 from nltk.lm.vocabulary import Vocabulary
+import string
 
-unk_token = "<unk>"
-pad_token = "<pad>"
-bos_token = "<bos>"
-eos_token = "<eos>"
+pad_token = "<PAD>"
+bos_token = "<BOS>"
+eos_token = "<EOS>"
 
 CHARSET = (
-    [unk_token, pad_token, bos_token, eos_token]
-    + sorted(AR_CHARSET)
-    + sorted(UNICODE_LETTER_MARK_NUMBER_CHARSET)
-    + sorted(UNICODE_PUNCT_SYMBOL_CHARSET)
+    sorted(AR_CHARSET)
+    + sorted(string.printable)
+    + sorted(UNICODE_PUNCT_CHARSET)
+    + [pad_token, bos_token, eos_token]
 )
 
 ARABIC_VOCABULARY = Vocabulary(CHARSET)
