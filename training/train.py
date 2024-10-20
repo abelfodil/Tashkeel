@@ -3,7 +3,7 @@ from datasets.tashkeela import TashkeelaDataModule
 data_module = TashkeelaDataModule()
 
 data_module.prepare_data()
-data_module.setup("")
+data_module.setup()
 
 train_dataloader = data_module.train_dataloader()
 

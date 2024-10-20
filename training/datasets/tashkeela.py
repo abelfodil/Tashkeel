@@ -46,7 +46,7 @@ class TashkeelaDataModule(L.LightningDataModule):
             with tarfile.open(dataset_tar_path, "r:bz2") as tar_ref:
                 tar_ref.extractall(self.data_dir, filter="tar")
 
-    def setup(self, stage: str):
+    def setup(self, stage: str = None):
         dataset = ConcatDataset(
             TextFileDataset(document_path) for document_path in self.documents_paths
         )
