@@ -25,6 +25,13 @@ class TashkeelaDataModule(L.LightningDataModule):
         dataset_path = f"{self.data_dir}/Tashkeela-arabic-diacritized-text-utf8-0.3"
         dataset_tar_path = f"{dataset_path}.tar.bz2"
 
+        self.documents_paths = glob.iglob(
+            f"{dataset_path}/texts.txt/**/*.txt", recursive=True
+        )
+
+        if os.path.exists(dataset_path):
+            return
+
         if not os.path.exists(dataset_zip_path):
             urllib.request.urlretrieve(
                 "https://www.kaggle.com/api/v1/datasets/download/linuxscout/tashkeela",
@@ -38,10 +45,6 @@ class TashkeelaDataModule(L.LightningDataModule):
         if not os.path.exists(dataset_path):
             with tarfile.open(dataset_tar_path, "r:bz2") as tar_ref:
                 tar_ref.extractall(self.data_dir, filter="tar")
-
-        self.documents_paths = glob.glob(
-            f"{dataset_path}/texts.txt/**/*.txt", recursive=True
-        )
 
     def setup(self, stage: str):
         dataset = ConcatDataset(
