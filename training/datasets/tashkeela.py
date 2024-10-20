@@ -3,42 +3,17 @@
 
 import pathlib
 import os.path
-from typing import Union
 import urllib.request
 import zipfile
 import tarfile
 import lightning as L
 import glob
 import torch
-from torch.utils.data import random_split, DataLoader, Dataset, ConcatDataset
-from datasets.transforms.diacritics import StripDiacritics
-import nltk
-
-nltk.download("punkt_tab")
+from torch.utils.data import random_split, DataLoader, ConcatDataset
+from datasets.textfile_dataset import TextFileDataset
 
 
 class TashkeelaDataModule(L.LightningDataModule):
-
-    class TashkeelaDataset(Dataset):
-
-        def __init__(
-            self, file_path: Union[str, pathlib.Path], transform=StripDiacritics()
-        ):
-            with open(file_path, "r", encoding="utf-8") as f:
-                file_content = f.read()
-            self.sentences = nltk.sent_tokenize(file_content)
-
-            self.transform = transform
-
-        def __len__(self):
-            return len(self.sentences)
-
-        def __iter__(self):
-            return (self.transform(sentence) for sentence in self.sentences)
-
-        def __getitem__(self, index):
-            return self.transform(self.sentences[index])
-
     def __init__(
         self, data_dir: str = f"{pathlib.Path(__file__).parent.resolve()}/downloads"
     ):
@@ -70,8 +45,7 @@ class TashkeelaDataModule(L.LightningDataModule):
 
     def setup(self, stage: str):
         dataset = ConcatDataset(
-            self.TashkeelaDataset(document_path)
-            for document_path in self.documents_paths
+            TextFileDataset(document_path) for document_path in self.documents_paths
         )
         self.train, self.val, self.test, self.predict = random_split(
             dataset, [0.8, 0.1, 0.1, 0], generator=torch.Generator()
