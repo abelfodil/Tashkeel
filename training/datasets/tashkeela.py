@@ -55,7 +55,7 @@ class TashkeelaDataModule(L.LightningDataModule):
         )
 
     def train_dataloader(self):
-        return DataLoader(self.train, batch_size=32)
+        return DataLoader(self.train, batch_size=1)
 
     def val_dataloader(self):
         return DataLoader(self.val, batch_size=32)
