@@ -1,7 +1,7 @@
 # Source: https://www.kaggle.com/datasets/linuxscout/tashkeela
 # Reference: http://dx.doi.org/10.1016/j.dib.2017.01.011
 
-import pathlib
+import os
 import os.path
 import urllib.request
 import zipfile
@@ -14,9 +14,8 @@ from datasets.textfile_dataset import TextFileDataset
 
 
 class TashkeelaDataModule(L.LightningDataModule):
-    def __init__(
-        self, data_dir: str = f"{pathlib.Path(__file__).parent.resolve()}/downloads"
-    ):
+
+    def __init__(self, data_dir: str = f"{os.getcwd()}/downloads"):
         super().__init__()
         self.data_dir = data_dir
 
