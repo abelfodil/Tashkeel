@@ -12,7 +12,8 @@ class TextFileDataset(Dataset):
     ):
         with open(file_path, "r", encoding="utf-8") as f:
             file_content = f.read()
-        self.sentences = re.split(self.SENTENCE_DELIMITER, file_content)
+        sentences = re.split(self.SENTENCE_DELIMITER, file_content)
+        self.sentences = [sentence for sentence in sentences if sentence.strip() != ""]
 
         self.transform = transform
 
