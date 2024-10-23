@@ -2,19 +2,17 @@ import pathlib
 from typing import Union
 from torch.utils.data import Dataset
 from datasets.transforms.diacritics import StripDiacritics
-import nltk
-
-nltk.download("punkt_tab")
-
+import re
 
 class TextFileDataset(Dataset):
+    SENTENCE_DELIMITER = re.compile(r"[.!؟\n]")
 
     def __init__(
         self, file_path: Union[str, pathlib.Path], transform=StripDiacritics()
     ):
         with open(file_path, "r", encoding="utf-8") as f:
             file_content = f.read()
-        self.sentences = nltk.sent_tokenize(file_content)
+        self.sentences = re.split(self.SENTENCE_DELIMITER, file_content)
 
         self.transform = transform
 
