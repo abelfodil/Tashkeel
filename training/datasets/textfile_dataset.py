@@ -5,7 +5,7 @@ from datasets.transforms.diacritics import StripDiacritics
 import re
 
 class TextFileDataset(Dataset):
-    SENTENCE_DELIMITER = re.compile(r"[.!؟\n]")
+    SENTENCE_DELIMITER = re.compile(r"[.!؟\n]+")
 
     def __init__(
         self, file_path: Union[str, pathlib.Path], transform=StripDiacritics()
