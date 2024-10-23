@@ -1,3 +1,4 @@
 camel-tools
 lightning
 nltk
+tokenizers

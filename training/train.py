@@ -1,9 +1,12 @@
 from datasets.tashkeela import TashkeelaDataModule
+from tokenizer import BPETokenizer
 
 data_module = TashkeelaDataModule()
 
 data_module.prepare_data()
 data_module.setup()
+
+tokenizer = BPETokenizer(dataset=data_module)
 
 train_dataloader = data_module.train_dataloader()
 
