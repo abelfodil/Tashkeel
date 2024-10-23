@@ -14,3 +14,12 @@ input_sentence_batch, target_sentence_batch = next(iter(train_dataloader))
 
 print(input_sentence_batch)
 print(target_sentence_batch)
+
+encoded = tokenizer.encode_batch(target_sentence_batch)
+
+print(encoded[0].tokens)
+print(len(encoded[0].tokens))
+print(target_sentence_batch[0])
+
+decoded = tokenizer.decode_batch([i.ids for i in encoded])
+print(decoded[0])
