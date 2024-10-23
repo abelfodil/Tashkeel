@@ -24,7 +24,7 @@ class TashkeelaDataModule(L.LightningDataModule):
         dataset_path = f"{self.data_dir}/Tashkeela-arabic-diacritized-text-utf8-0.3"
         dataset_tar_path = f"{dataset_path}.tar.bz2"
 
-        self.documents_paths = glob.iglob(
+        self.documents_paths = glob.glob(
             f"{dataset_path}/texts.txt/**/*.txt", recursive=True
         )
 
